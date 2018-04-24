@@ -1,10 +1,8 @@
 from sklearn.preprocessing import LabelBinarizer
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from pyimagesearch.nn.conv import shallownet
 from keras.optimizers import SGD
 from keras.datasets import cifar10
-from imutils import paths
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -17,13 +15,13 @@ ap.add_argument("-o", "--output", required=True,
 args = vars(ap.parse_args())
 
 print("[INFO] loading CIFAR-10 data...")
-((trainX, trainY), (testX, testY)) = cifar10.load_data()
+(trainX, trainY), (testX, testY) = cifar10.load_data()
 trainX = trainX.astype("float") / 255.0
 testX = testX.astype("float") / 255.0
 
-
-trainY = LabelBinarizer().fit_transform(trainY)
-testY = LabelBinarizer().fit_transform(testY)
+lb = LabelBinarizer()
+trainY = lb.fit_transform(trainY)
+testY = lb.fit_transform(testY)
 
 labelNames = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
 
